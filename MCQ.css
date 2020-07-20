@@ -1,0 +1,28 @@
+body{
+    font-family: "Lato", sans-serif;
+}
+.q1{
+    height: 400px;
+    background-color: yellow;
+}
+.form-container {
+    padding-left: 10px;
+}
+.input{
+    padding-bottom: 1px;
+}
+button{
+    background-color: #0f0d7a;
+    border: none;
+    color: aliceblue;
+    padding: 12px 28px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.3s;
+}
+button:hover{
+    background-color: #7371de;
+    color: aliceblue;
+}
