@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="MCQ.css">
     </head>
     <body>
-        <div class="container">
+        <!-- <div class="container">
             <div class="q1">
                 01) What is the district that horton plains situated in? <br><br>
                 <div class="form-container">
@@ -27,6 +27,52 @@
             <div class="q9"></div>
             <div class="q10"></div>
             <button>Submit >></button>
-        </div>
+        </div> -->
+
+        <div id="mcq"></div>
+        <button id="submit">Submit >></button>
+        <div id="results"></div>
+
+        <script>
+            const mcqContainer = document.getElementById('mcq');
+            const resultsContainer = document.getElementById('results');
+            const submitButton = document.getElementById('submit');
+
+            function askQuiz(){}
+            function showResults(){}
+
+            askQuiz();
+            submitButton.addEventListener('click', showResults);
+
+            const questions = [
+                {
+                    question: "What is the district that horton plains situated in?",
+                    answers: {
+                        a: "Anuradhapura",
+                        b: "Nuwaraeliya",
+                        c: "Kandy",
+                    },
+                    correctAnswer: "b"
+                },
+                {
+                    question: "What is the district that koneshwaram kovil situated in?",
+                    answers: {
+                        a: "Jaffna",
+                        b: "Nuwaraeliya",
+                        c: "Ratnapura",
+                    },
+                    correctAnswer: "a"
+                },
+                {
+                    question: "What is the district that sigiriya situated in?",
+                    answers: {
+                        a: "Anuradhapura",
+                        b: "Nuwaraeliya",
+                        c: "Kandy",
+                    },
+                    correctAnswer: "a"
+                }
+            ];
+        </script>
     </body>
 </html>
