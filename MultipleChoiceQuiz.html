@@ -1,103 +1,231 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Multiple choice quiz</title>
-        <link rel="stylesheet" href="MCQ.css">
-    </head>
-    <body>
-        <!-- <div class="container">
-            <div class="q1">
-                01) What is the district that horton plains situated in? <br><br>
-                <div class="form-container">
-                <form action="answers1">
-                    <div class="input"><input type="radio" name="answer" value="1"> 1. Anuradhapura</div><br>
-                    <div class="input"><input type="radio" name="answer" value="2"> 2. Nuwaraeliya</div><br>
-                    <div class="input"><input type="radio" name="answer" value="3"> 3. Kandy</div><br>
-                    <input type="radio" name="answer" value="4"> 4. Monaragala
-                  </form>
-                </div>
-            </div>
-            <div class="q2"></div>
-            <div class="q3"></div>
-            <div class="q4"></div>
-            <div class="q5"></div>
-            <div class="q6"></div>
-            <div class="q7"></div>
-            <div class="q8"></div>
-            <div class="q9"></div>
-            <div class="q10"></div>
-            <button>Submit >></button>
-        </div> -->
 
-        <div id="mcq"></div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiple choice quiz</title>
+    <link rel="stylesheet" href="MCQ.css">
+</head>
+
+<body>
+    <p id="topic">Increase your knowledge</p>
+    <p> You have 10 minutess to complete this questions after clicking 'Start Quiz'</p>
+    <button id="start">Start Quiz</button>
+
+    <div id="quiz"></div>
+    <div id="results"></div>
+    <div id="submitBtn">
         <button id="submit">Submit >></button>
-        <div id="results"></div>
+    </div>
 
-        <script>
-            const mcqContainer = document.getElementById('mcq');
-            const resultsContainer = document.getElementById('results');
-            const submitButton = document.getElementById('submit');
+    <script>
 
-            function askQuiz(){}
-            function showResults(){}
+        function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
 
-            askQuiz();
-            submitButton.addEventListener('click', showResults);
+            function showQuestions(questions, quizContainer) {
+                // code will go here
 
-            const questions = [
-                {
-                    question: "What is the district that horton plains situated in?",
-                    answers: {
-                        a: "Anuradhapura",
-                        b: "Nuwaraeliya",
-                        c: "Kandy",
-                    },
-                    correctAnswer: "b"
-                },
-                {
-                    question: "What is the district that koneshwaram kovil situated in?",
-                    answers: {
-                        a: "Jaffna",
-                        b: "Nuwaraeliya",
-                        c: "Ratnapura",
-                    },
-                    correctAnswer: "a"
-                },
-                {
-                    question: "What is the district that sigiriya situated in?",
-                    answers: {
-                        a: "Anuradhapura",
-                        b: "Nuwaraeliya",
-                        c: "Kandy",
-                    },
-                    correctAnswer: "a"
-                }
-            ];
+                // we'll need a place to store the output and the answer choices
+                var output = [];
+                var answers;
 
-            function askQuiz(){
-                //variable to store the output
-                const output = [];
-                questions.forEach(
-                    (currentQuestion, questionNumber) => {
-                        //variable to store answer
-                        const answers = []; 
-                        for(letter in currentQuestion.answers){
-                            answers.push(
-                               <label>
-                                <input type="radio" name= "question${questionNumber}" value = "${letter}"></input>
-                                ${letter}:
-                                ${currentQuestion.answers[letter]}
-                                </label>
-                            );
-                        }
-                        output.push(
-                            <div class = "question">${currentQuestion.question} </div>
-                            <div class="answers"> ${answers.join('')} </div>
+                // for each question...
+                for (var i = 0; i < questions.length; i++) {
+
+                    // first reset the list of answers
+                    answers = [];
+
+                    // for each available answer to this question...
+                    for (letter in questions[i].answers) {
+
+                        // ...add an html radio button
+                        answers.push(
+                            '<label>'
+                            + '<input type="radio" name="question' + i + '" value="' + letter + '">'
+                            + letter + ': '
+                            + questions[i].answers[letter]
+                            + '</label>'
                         );
                     }
-                );
-                mcqContainer.innerHTML = output.join('');
+
+                    // add this question and its answers to the output
+                    output.push(
+                        '<div class="question">' + questions[i].question + '</div>'
+                        + '<div class="answers">' + answers.join('') + '</div>'
+                    );
+                }
+
+                // finally combine our output list into one string of html and put it on the page
+                quizContainer.innerHTML = output.join('');
             }
-        </script>
-    </body>
+
+            
+
+            // show the questions
+            showQuestions(questions, quizContainer);
+
+            // when user clicks submit, show results
+            submitButton.onclick = function () {
+                showResults(questions, quizContainer, resultsContainer);
+            }
+        }
+        function showResults(questions, quizContainer, resultsContainer) {
+                // code will go here
+
+                // gather answer containers from our quiz
+                var answerContainers = quizContainer.querySelectorAll('.answers');
+
+                // keep track of user's answers
+                var userAnswer = '';
+                var numCorrect = 0;
+                var marks = 0;
+
+                // for each question...
+                for (var i = 0; i < questions.length; i++) {
+
+                    // find selected answer
+                    userAnswer = (answerContainers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
+
+                    // if answer is correct
+                    if (userAnswer === questions[i].correctAnswer) {
+                        // add to the number of correct answers
+                        numCorrect++;
+                        marks = marks+2
+
+                        // color the answers green
+                        answerContainers[i].style.color = '#070bf5';
+                    }
+                    // if answer is wrong or blank
+                    else {
+                        marks--
+                        // color the answers red
+                        answerContainers[i].style.color = 'red';
+                    }
+                }
+                if (marks>10){
+                    document.body.style.backgroundColor = "#87d1e0";
+                    document.body.style.backgroundImage = "none";
+                }
+                else{
+                    document.body.style.backgroundColor = "#e091eb";
+                    document.body.style.backgroundImage = "none";
+                }
+
+                // show number of correct answers out of total
+                resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length + '   &  You got '+marks + ' marks';
+            }
+
+
+        var myQuestions = [
+            {
+                question: "1) What is the district that horton plains situated in?",
+                answers: {
+                    a: 'Anuradhapura',
+                    b: 'Nuwaraeliya',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                question: "2) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "3) In which district we can see the sigiriya rock?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Jaffna',
+                    c: 'Anuradhapura'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "4) Who built the sigiriya castle?",
+                answers: {
+                    a: 'King Dutugamunu',
+                    b: 'King Kashyapa',
+                    c: 'King parakramabahu'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                question: "5) We can visit world's end in?",
+                answers: {
+                    a: 'Horton plains',
+                    b: 'Piduruthalagala',
+                    c: 'Ritigala mountain'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                question: "6) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "7) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "8) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "9) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                question: "10) In which district we can see the kovil koneshwaram?",
+                answers: {
+                    a: 'Nuwaraeliya',
+                    b: 'Anuradhapura',
+                    c: 'Jaffna'
+                },
+                correctAnswer: 'c'
+            }
+        ];
+
+
+        var quizContainer = document.getElementById('quiz');
+        var resultsContainer = document.getElementById('results');
+        var submitButton = document.getElementById('submit');
+        var startButton = document.getElementById('start');
+
+        startButton.onclick = function(){
+            generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+            setTimeout(function(){ 
+                alert("Time is over");
+                showResults(myQuestions, quizContainer, resultsContainer);
+            }, 1000 *60);
+        }
+        
+        
+
+    </script>
+</body>
+
 </html>

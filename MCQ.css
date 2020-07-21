@@ -1,17 +1,9 @@
 body{
     font-family: "Lato", sans-serif;
+    background-image: url("backimg.jpg");
+    /* background-color: #cccccc; */
 }
-.q1{
-    height: 400px;
-    background-color: yellow;
-}
-.form-container {
-    padding-left: 10px;
-}
-.input{
-    padding-bottom: 1px;
-}
-button{
+#start{
     background-color: #0f0d7a;
     border: none;
     color: aliceblue;
@@ -22,7 +14,52 @@ button{
     font-size: 16px;
     transition-duration: 0.3s;
 }
-button:hover{
+#start:hover{
     background-color: #7371de;
     color: aliceblue;
+}
+#submitBtn{
+    padding-top: 30px;
+    padding-left: 150px;
+}
+#submit{
+    background-color: #0f0d7a;
+    border: none;
+    color: aliceblue;
+    padding: 12px 28px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.3s;
+}
+#submit:hover{
+    background-color: #7371de;
+    color: aliceblue;
+}
+#quiz{
+    padding-left: 50px;
+    padding-top: 20px;
+}
+#results{
+    position: absolute;
+    top: 100px;
+    right: 500px;
+    font-size: large;
+    font-weight: 500;
+}
+#topic{
+    font-size: large;
+    color: #0f0d7a;
+    font-weight: 900;
+    padding-left: 30px;
+}
+.question{
+    padding-top: 10px;
+}
+.answers{
+    padding-top: 4px;
+}
+label{
+    padding-inline-end: 20px;
 }
